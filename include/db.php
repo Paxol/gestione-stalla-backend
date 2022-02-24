@@ -53,15 +53,54 @@ class Database
 	{
 	}
 
+	public function ping() {
+		return $this->connection->ping();
+	}
+
 	public function escape($to_escape)
 	{
 		return $this->connection->real_escape_string($to_escape);
 	}
 
+	public function escape_object($to_escape)
+	{
+		$obj = new stdClass();
+
+		foreach ($to_escape as $key => $value) {
+			$obj->{$key} = $this->escape($value);
+		}
+
+		return $obj;
+	}
+
+	public function start_transaction()
+	{
+		if (!$this->connection->query("START TRANSACTION")) {
+			// Si è verificato un errore
+			$this->error('Database error', $this->connection->error);
+		}
+	}
+
+	public function commit()
+	{
+		if (!$this->connection->query("COMMIT")) {
+			// Si è verificato un errore
+			$this->error('Database error', $this->connection->error);
+		}
+	}
+
+	public function rollback()
+	{
+		if (!$this->connection->query("ROLLBACK")) {
+			// Si è verificato un errore
+			$this->error('Database error', $this->connection->error);
+		}
+	}
+
 	public function query($query)
 	{
 		// Se una query è stata lasciata aperta la chiudo
-		if (!$this->query_closed) {
+		if (gettype($this->query) != "boolean" && !$this->query_closed) {
 			$this->query->close();
 		}
 
@@ -143,7 +182,7 @@ class Database
 		return $this->connection->insert_id;
 	}
 
-	public function error($error, $debug_message)
+	protected function error($error, $debug_message)
 	{
 		$this->last_error = [$error, $debug_message];
 		throw new Error($error);

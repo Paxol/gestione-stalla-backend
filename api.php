@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ERROR | E_PARSE);
 require_once(__DIR__ . '/include/db.php');
+require_once(__DIR__ . '/actions/index.php');
 
 header('Access-Control-Allow-Origin: *');
 
@@ -27,9 +28,9 @@ function handle_db_error($db, $th)
 	}
 }
 
+$db;
 switch ($_REQUEST["action"]) {
 	case 'get-codici-bovini-in-stalla':
-		$db;
 		try {
 			// Connessione al DB e query
 			$db = Database::get_instance();
@@ -44,6 +45,25 @@ switch ($_REQUEST["action"]) {
 			// Gestione degli errori
 			handle_db_error($db, $th);
 		}
+		break;
+	case 'get-codici-stalle':
+		try {
+			// Connessione al DB e query
+			$db = Database::get_instance();
+			$codici_stalle = $db->query("SELECT `ID` AS `id`, `Codice` AS `codice`, `Descrizione` AS `descrizione` FROM `Luogo`")->fetch_all();
+
+			// Invio risposta
+			send_response(array(
+				"status" => "ok",
+				"data" => $codici_stalle
+			));
+		} catch (\Throwable $th) {
+			// Gestione degli errori
+			handle_db_error($db, $th);
+		}
+		break;
+	case 'registra-modello-4':
+		send_response(registra_modello_4());
 		break;
 
 	default:
