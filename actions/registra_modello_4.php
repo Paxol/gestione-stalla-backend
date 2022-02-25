@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/../include/common.php');
 require_once(__DIR__ . '/../include/db.php');
 
 function valida_modello($modello)
@@ -113,8 +114,8 @@ function registra_modello_4()
     );
   }
 
-  $db = Database::get_instance();
   try {
+    $db = Database::get_instance();
     $db->start_transaction();
 
     $luogo = 0;
@@ -162,16 +163,10 @@ function registra_modello_4()
       "status" => "ok"
     );
   } catch (\Throwable $th) {
-    if ($db->ping()) {
+    if ($db != NULL && $db->ping()) {
       $db->rollback();
     }
 
-    var_dump($th);
-    var_dump($db->get_last_error());
-
-    return array(
-      "error" => "Database error",
-      "message" => "Si è verificato un problema col database"
-    );
+    return build_db_error_response($db, $th);
   }
 }
