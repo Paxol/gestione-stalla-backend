@@ -12,7 +12,10 @@ function send_response($res)
 }
 
 switch ($_REQUEST["action"]) {
-	case 'get_bovini_da_fecondare':
+	case 'conferma-fecondazione':
+		send_response(conferma_fecondazione());
+		break;
+	case 'get-bovini-da-fecondare':
 		send_response(get_bovini_da_fecondare());
 		break;
 	case 'get-codici-bovini-in-stalla':
@@ -20,6 +23,9 @@ switch ($_REQUEST["action"]) {
 		break;
 	case 'get-codici-stalle':
 		send_response(get_codici_stalle());
+		break;
+	case 'get-fecondazioni-da-confermare':
+		send_response(get_fecondazioni_da_confermare());
 		break;
 	case 'registra-fecondazione':
 		send_response(registra_fecondazione());
