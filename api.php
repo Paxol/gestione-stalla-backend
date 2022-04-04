@@ -15,6 +15,8 @@ switch ($_REQUEST["action"]) {
 	case 'conferma-fecondazione':
 		send_response(conferma_fecondazione());
 		break;
+	case 'get-bovini-da-asciugare':
+		send_response(get_bovini_da_asciugare());
 	case 'get-bovini-da-fecondare':
 		send_response(get_bovini_da_fecondare());
 		break;
@@ -29,6 +31,9 @@ switch ($_REQUEST["action"]) {
 		break;
 	case 'registra-fecondazione':
 		send_response(registra_fecondazione());
+		break;
+	case 'registra-asciutta':
+		send_response(registra_asciutta());
 		break;
 	case 'registra-modello-4':
 		send_response(registra_modello_4());
