@@ -20,6 +20,9 @@ switch ($_REQUEST["action"]) {
 	case 'get-bovini-da-fecondare':
 		send_response(get_bovini_da_fecondare());
 		break;
+	case 'get-bovini-in-gravidanza':
+		send_response(get_bovini_in_gravidanza());
+		break;
 	case 'get-codici-bovini-in-stalla':
 		send_response(get_codici_bovini_in_stalla());
 		break;
@@ -38,6 +41,8 @@ switch ($_REQUEST["action"]) {
 	case 'registra-modello-4':
 		send_response(registra_modello_4());
 		break;
+	case 'registra-parto':
+		send_response(registra_parto());
 
 	default:
 		// Risposta di default
