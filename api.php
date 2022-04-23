@@ -17,6 +17,7 @@ switch ($_REQUEST["action"]) {
 		break;
 	case 'get-bovini-da-asciugare':
 		send_response(get_bovini_da_asciugare());
+		break;
 	case 'get-bovini-da-fecondare':
 		send_response(get_bovini_da_fecondare());
 		break;
@@ -32,6 +33,9 @@ switch ($_REQUEST["action"]) {
 	case 'get-fecondazioni-da-confermare':
 		send_response(get_fecondazioni_da_confermare());
 		break;
+	case 'get-nascite-non-registrate':
+		send_response(get_nascite_non_registrate());
+		break;
 	case 'registra-fecondazione':
 		send_response(registra_fecondazione());
 		break;
@@ -43,6 +47,10 @@ switch ($_REQUEST["action"]) {
 		break;
 	case 'registra-parto':
 		send_response(registra_parto());
+		break;
+	case 'registra-nascita':
+		send_response(registra_nascita());
+		break;
 
 	default:
 		// Risposta di default
