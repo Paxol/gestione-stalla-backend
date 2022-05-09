@@ -21,6 +21,9 @@ switch ($_REQUEST["action"]) {
 	case 'get-bovini-da-fecondare':
 		send_response(get_bovini_da_fecondare());
 		break;
+	case 'get-bovini-in-fecondazione':
+		send_response(get_bovini_in_fecondazione());
+		break;
 	case 'get-bovini-in-gravidanza':
 		send_response(get_bovini_in_gravidanza());
 		break;
