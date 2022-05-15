@@ -39,6 +39,18 @@ switch ($_REQUEST["action"]) {
 	case 'get-nascite-non-registrate':
 		send_response(get_nascite_non_registrate());
 		break;
+	case 'get-notifica-bovini-da-asciugare':
+		send_response(get_notifica_bovini_da_asciugare());
+		break;
+	case 'get-notifica-bovini-da-fecondare':
+		send_response(get_notifica_bovini_da_fecondare());
+		break;
+	case 'get-notifica-bovini-termine-gravidanza':
+		send_response(get_notifica_bovini_termine_gravidanza());
+		break;
+	case 'get-notifica-fecondazioni-da-confermare':
+		send_response(get_notifica_fecondazioni_da_confermare());
+		break;
 	case 'registra-fecondazione':
 		send_response(registra_fecondazione());
 		break;
