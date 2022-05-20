@@ -20,7 +20,7 @@ class Database
 		$config = new DB_Config();
 
 		try {
-			$this->connection = new mysqli($config->HOST, $config->DB_USER, $config->DB_PASS, $config->DB_NAME);
+			$this->connection = new mysqli($config->DB_HOST, $config->DB_USER, $config->DB_PASS, $config->DB_NAME);
 			if ($this->connection->connect_error) {
 				$this->error('Si è verificato un errore nella connessione al database', $this->connection->connect_error);
 			}
@@ -99,18 +99,22 @@ class Database
 
 	public function query($query)
 	{
-		// Se una query è stata lasciata aperta la chiudo
-		if (gettype($this->query) != "boolean" && !$this->query_closed) {
-			$this->query->close();
-		}
+		try {
+			// Se una query è stata lasciata aperta la chiudo
+			if (gettype($this->query) != "boolean" && !$this->query_closed) {
+				$this->query->close();
+			}
 
-		if ($this->query = $this->connection->query($query)) {
-			// Imposto la query come aperta
-			$this->query_closed = FALSE;
-			$this->query_count++;
-		} else {
-			// Si è verificato un errore
-			$this->error('Database error', $this->connection->error);
+			if ($this->query = $this->connection->query($query)) {
+				// Imposto la query come aperta
+				$this->query_closed = FALSE;
+				$this->query_count++;
+			} else {
+				// Si è verificato un errore
+				$this->error('Database error', $this->connection->error);
+			}
+		} catch (\Throwable $th) {
+			$this->error('Errore query', $this->connection->error);
 		}
 
 		// Ritorno l'istanza della classe

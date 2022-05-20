@@ -1,5 +1,7 @@
 <?php
-error_reporting(E_ERROR | E_PARSE);
+// Report all errors except warnings and notices
+//error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
+
 require_once(__DIR__ . '/actions/index.php');
 
 header('Access-Control-Allow-Origin: *');
